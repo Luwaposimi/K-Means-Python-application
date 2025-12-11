@@ -47,7 +47,7 @@ def download_with_progress(url: str, filename: str):
             f.write(data)
             bar.update(len(data))
     print("Downloaded successfully")
-
+#Parquet
 def validate_parquet(filename: str):
     try:
         pq.read_metadata(filename)
@@ -56,7 +56,7 @@ def validate_parquet(filename: str):
         print("Invalid Parquet, removing and re-downloading...")
         os.remove(filename)
         raise
-
+#centroids
 def extract_centroids():
     if os.path.exists(COORD_FILE):
         print(f"Already extracted: {os.path.basename(COORD_FILE)}")
@@ -84,7 +84,7 @@ download_with_progress(TRIP_URL, FULL_TRIP_FILE)
 validate_parquet(FULL_TRIP_FILE)
 download_with_progress(SHAPE_URL, SHAPE_ZIP)
 extract_centroids()
-
+#Sample of Data
 print(f"\nLoading small sample of {sample_size:,} trips...")
 df_trips = pd.read_parquet(FULL_TRIP_FILE, columns=['PULocationID']).sample(n=sample_size, random_state=42)
 df_coords = pd.read_csv(COORD_FILE)
@@ -96,7 +96,7 @@ print(f"Valid trips in sample: {len(df):,}")
 
 X = df[['longitude', 'latitude']].values
 
-
+#prepare elbow and silhouette
 print("\nRunning Elbow & Silhouette (super fast)...")
 inertias = []
 silhouettes = []
@@ -146,4 +146,5 @@ print("→ Saved cluster_centers.csv")
 
 print("\nDone in seconds!")
 print(f"   • {os.path.abspath(ELBOW_PLOT)}")
+
 print(f"   • {os.path.abspath(CLUSTER_PLOT)}")
