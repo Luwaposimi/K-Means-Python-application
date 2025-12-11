@@ -1,7 +1,7 @@
 import unittest
 from kmeans_nyc_taxi import X_scaled, optimal_k, kmeans  # ensure script is run or imported properly
 
-
+#Unit test
 class TestKMeansTaxi(unittest.TestCase):
 
     def test_data_not_empty(self):
@@ -21,3 +21,4 @@ class TestKMeansTaxi(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
